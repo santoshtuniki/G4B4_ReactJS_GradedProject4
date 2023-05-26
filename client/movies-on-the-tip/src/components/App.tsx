@@ -1,10 +1,13 @@
 import React from 'react';
+
+import NavigationMenu from './NavigationMenu';
+
 import './App.css';
 
-function App() {
+const App = () => {
 	return (
 		<div className="App">
-			APP
+			<NavigationMenu />
 		</div>
 	);
 }
