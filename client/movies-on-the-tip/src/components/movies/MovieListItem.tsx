@@ -13,7 +13,7 @@ const MovieListItem = ({ movie }: Props) => {
 	const { id, title, posterurl } = movie
 
 	return (
-		<Card style={{ width: '18rem' }}>
+		<Card className="card-width">
 			<Card.Img variant="top" src={posterurl} style={{ height: "300px" }} />
 			<Card.Body className="text-center">
 				<Card.Title>{title}</Card.Title>

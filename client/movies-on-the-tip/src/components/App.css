@@ -9,3 +9,20 @@
 .zero {
 	border-radius: 0;
 }
+
+.no-style,
+.no-style:hover {
+	text-decoration: none;
+	color: black;
+}
+
+.card-width {
+	width: 20rem
+}
+
+@media screen and (max-width: 575px) {
+	.card-width {
+		width: 80%;
+		margin: 0 auto;
+	}
+}
