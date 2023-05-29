@@ -30,9 +30,11 @@ const FavouriteMovies = () => {
 	const handleDeleteMovie = async (id: string) => {
 		try {
 			await removeFromFavourites(id);
-			setMovies((prevMovies) =>
-				prevMovies.filter((movie) => movie.id !== id)
-			);
+			setTimeout(() => {
+				setMovies((prevMovies) =>
+					prevMovies.filter((movie) => movie.id !== id)
+				)
+			}, 800)
 		} catch (error: any) {
 			setError(error);
 			setStatus("ERROR_LOADING");

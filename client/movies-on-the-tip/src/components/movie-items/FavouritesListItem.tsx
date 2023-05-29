@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Button, Toast, ToastContainer } from "react-bootstrap";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import IMovie from "../../model/IMovie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { removeFromFavourites } from "../../service/FavouritesService";
 
 type Props = {
 	movie: IMovie,
@@ -22,7 +21,7 @@ const FavouriteListItem = ({ movie, onDelete }: Props) => {
 		try {
 			onDelete(id);	// Call the onDelete callback function to notify the parent component about the deletion
 			setResponseState('success');
-			setToastMessage(`Movie ${title} removed from favourites`);
+			setToastMessage(`${title} removed from favourites`);
 			setShow(true);
 		} catch (error: any) {
 			setResponseState('error');
@@ -38,19 +37,19 @@ const FavouriteListItem = ({ movie, onDelete }: Props) => {
 				<Card.Body className="text-center">
 					<Card.Title>{title}</Card.Title>
 					<Button variant="light" onClick={handleRemoveFromFavorites}>
-						<small>Remove from favourite</small>
+						Remove
 						<FontAwesomeIcon icon={faTrashCan} className="ms-1" />
 					</Button>
 				</Card.Body>
 			</Card>
 			{
 				responseState !== 'initial' && (
-					<ToastContainer className="p-3" position="top-end">
+					<ToastContainer className="p-3 position-fixed" position="top-end">
 						<Toast
-							bg={responseState === 'success' ? 'success' : 'danger'}
+							bg={responseState === 'success' ? 'info' : 'danger'}
 							show={show}
 							autohide
-							delay={5000}
+							delay={500}
 							onClose={() => setShow(false)}
 						>
 							<Toast.Header closeButton={false}>

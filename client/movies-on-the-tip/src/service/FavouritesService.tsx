@@ -17,7 +17,7 @@ const addToFavourites = (newFavourite: Omit<IMovie, "id">) => {
 			}
 		}
 	)
-		.then(response => response.data.id);
+		.then(response => response.data);
 }
 
 const removeFromFavourites = (id: string) => {

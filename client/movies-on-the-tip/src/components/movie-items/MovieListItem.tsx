@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, Button, Toast, ToastContainer } from "react-bootstrap";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import IMovie from "../../model/IMovie";
@@ -19,9 +19,9 @@ const MovieListItem = ({ movie }: Props) => {
 
 	const handleAddToFavorites = async () => {
 		try {
-			const data = await addToFavourites(movie);
+			await addToFavourites(movie);
 			setResponseState('success');
-			setToastMessage(`Movie ${title} added to favorites`);
+			setToastMessage(`${title} added to favourites`);
 			setShow(true);
 		} catch (error: any) {
 			setResponseState('error');
@@ -44,12 +44,12 @@ const MovieListItem = ({ movie }: Props) => {
 			</Card>
 			{
 				responseState !== 'initial' && (
-					<ToastContainer className="p-3" position="top-end">
+					<ToastContainer className="p-3 position-fixed" position="top-end">
 						<Toast
 							bg={responseState === 'success' ? 'success' : 'danger'}
 							show={show}
 							autohide
-							delay={1000}
+							delay={500}
 							onClose={() => setShow(false)}
 						>
 							<Toast.Header closeButton={false}>
