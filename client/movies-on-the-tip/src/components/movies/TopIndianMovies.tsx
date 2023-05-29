@@ -4,7 +4,7 @@ import { Alert, Row, Col } from "react-bootstrap";
 import { LoadingStatus } from "../../model/type";
 import LoadingIndicator from "../common/LoadingIndicator";
 import IMovie from "../../model/IMovie";
-import MovieListItem from "./MovieListItem";
+import MovieListItem from "../movie-items/MovieListItem";
 import getTopRatedIndianMovies from "../../service/TopRatedIndianService";
 
 const TopIndianMovies = () => {

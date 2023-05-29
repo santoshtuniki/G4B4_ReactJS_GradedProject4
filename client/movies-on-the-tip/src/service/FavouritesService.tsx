@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Omit } from "react-bootstrap/esm/helpers";
 import IMovie from "../model/IMovie";
 
 const getFavouriteMovies = () => {
@@ -16,14 +17,13 @@ const addToFavourites = (newFavourite: Omit<IMovie, "id">) => {
 			}
 		}
 	)
-		.then(response => response.data);
+		.then(response => response.data.id);
 }
 
-const removeFromFavourites = (id: number) => {
+const removeFromFavourites = (id: string) => {
 	return axios.delete(`${process.env.REACT_APP_API_BASE_URL}/favourite/${id}`)
 		.then(response => response.data)
 };
-
 
 export {
 	getFavouriteMovies,

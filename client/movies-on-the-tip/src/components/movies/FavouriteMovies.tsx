@@ -4,8 +4,8 @@ import { Alert, Row, Col } from "react-bootstrap";
 import { LoadingStatus } from "../../model/type";
 import LoadingIndicator from "../common/LoadingIndicator";
 import IMovie from "../../model/IMovie";
-import MovieListItem from "./MovieListItem";
-import { getFavouriteMovies } from "../../service/FavouritesService";
+import FavouritesListItem from "../movie-items/FavouritesListItem";
+import { getFavouriteMovies, removeFromFavourites } from "../../service/FavouritesService";
 
 const FavouriteMovies = () => {
 
@@ -13,21 +13,31 @@ const FavouriteMovies = () => {
 	const [movies, setMovies] = useState<IMovie[]>([]);
 	const [error, setError] = useState<Error | null>(null);
 
-	useEffect(
-		() => {
-			const fetchMoviesData = async () => {
-				try {
-					const data = await getFavouriteMovies();
-					setMovies(data);
-					setStatus('LOADED');
-				} catch (error: any) {
-					setError(error);
-					setStatus('ERROR_LOADING');
-				}
+	useEffect(() => {
+		const fetchMoviesData = async () => {
+			try {
+				const data = await getFavouriteMovies();
+				setMovies(data);
+				setStatus('LOADED');
+			} catch (error: any) {
+				setError(error);
+				setStatus('ERROR_LOADING');
 			}
-			fetchMoviesData();
-		}, []
-	)
+		}
+		fetchMoviesData();
+	}, []);
+
+	const handleDeleteMovie = async (id: string) => {
+		try {
+			await removeFromFavourites(id);
+			setMovies((prevMovies) =>
+				prevMovies.filter((movie) => movie.id !== id)
+			);
+		} catch (error: any) {
+			setError(error);
+			setStatus("ERROR_LOADING");
+		}
+	};
 
 	let element;
 
@@ -47,7 +57,10 @@ const FavouriteMovies = () => {
 						movies?.map(
 							movie => (
 								<Col key={movie.id} className="d-flex align-items-stretch my-3">
-									<MovieListItem movie={movie} />
+									<FavouritesListItem
+										movie={movie}
+										onDelete={handleDeleteMovie} // Pass the onDelete callback
+									/>
 								</Col>
 							)
 						)
