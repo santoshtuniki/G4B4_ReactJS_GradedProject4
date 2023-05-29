@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Alert, Row, Col } from "react-bootstrap";
 
 import { LoadingStatus } from "../../model/type";
@@ -6,28 +6,38 @@ import LoadingIndicator from "../common/LoadingIndicator";
 import IMovie from "../../model/IMovie";
 import MovieListItem from "../movie-items/MovieListItem";
 import getTopRatedMovies from "../../service/TopRated";
+import { SearchContext } from "../common/SearchContext";
 
 const TopRatedMovies = () => {
 
 	const [status, setStatus] = useState<LoadingStatus>('LOADING');
 	const [movies, setMovies] = useState<IMovie[]>([]);
 	const [error, setError] = useState<Error | null>(null);
+	const [data, setData] = useState<IMovie[]>([]);
 
-	useEffect(
-		() => {
-			const fetchMoviesData = async () => {
-				try {
-					const data = await getTopRatedMovies();
-					setMovies(data);
-					setStatus('LOADED');
-				} catch (error: any) {
-					setError(error);
-					setStatus('ERROR_LOADING');
-				}
+	const { searchText } = useContext<any>(SearchContext);
+
+	useEffect(() => {
+		const fetchMoviesData = async () => {
+			try {
+				const data = await getTopRatedMovies();
+				setMovies(data);
+				setData(data);
+				setStatus('LOADED');
+			} catch (error: any) {
+				setError(error);
+				setStatus('ERROR_LOADING');
 			}
-			fetchMoviesData();
-		}, []
-	)
+		}
+		fetchMoviesData();
+	}, []);
+
+	useEffect(() => {
+		const filteredData = searchText ? movies.filter((movie) =>
+			movie.title.toLowerCase().includes(searchText.toLowerCase())
+		) : movies;
+		setData(() => filteredData);
+	}, [searchText, movies]);
 
 	let element;
 
@@ -44,7 +54,7 @@ const TopRatedMovies = () => {
 			element = (
 				<Row xs={1} sm={2} md={3} lg={5}>
 					{
-						movies?.map(
+						data?.map(
 							movie => (
 								<Col key={movie.id} className="d-flex align-items-stretch my-3">
 									<MovieListItem movie={movie} />

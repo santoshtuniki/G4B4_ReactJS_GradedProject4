@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { SearchProvider } from './common/SearchContext';
 
 import NavigationMenu from './NavigationMenu';
 import UpcomingMovies from './movies/UpcomingMovies';
@@ -15,18 +16,18 @@ import './App.css';
 const App = () => {
 	return (
 		<div className="App mx-3">
-			<NavigationMenu />
-
-			<div className="px-4">
-				<Routes>
-					<Route path='/' element={<UpcomingMovies />} />
-					<Route path='/inTheater' element={<InTheatersMovies />} />
-					<Route path='/topIndian' element={<TopIndianMovies />} />
-					<Route path='/topRated' element={<TopRatedMovies />} />
-					<Route path='/favourites' element={<FavouriteMovies />} />
-				</Routes>
-			</div>
-
+			<SearchProvider>
+				<NavigationMenu />
+				<div className="px-4">
+					<Routes>
+						<Route path='/' element={<UpcomingMovies />} />
+						<Route path='/inTheater' element={<InTheatersMovies />} />
+						<Route path='/topIndian' element={<TopIndianMovies />} />
+						<Route path='/topRated' element={<TopRatedMovies />} />
+						<Route path='/favourites' element={<FavouriteMovies />} />
+					</Routes>
+				</div>
+			</SearchProvider>
 		</div>
 	);
 }
