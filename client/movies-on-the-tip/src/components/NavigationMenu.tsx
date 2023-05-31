@@ -16,6 +16,7 @@ const NavigationMenu = () => {
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Backspace" && searchText.length > 0) {
+			e.preventDefault(); // Prevent the default behavior of the keydown event
 			setSearchText(
 				(prevSearchText) => prevSearchText.slice(0, -1)
 			);
@@ -31,11 +32,11 @@ const NavigationMenu = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						<Nav.Link to="/" as={NavLink}>Coming Soon</Nav.Link>
-						<Nav.Link to="/inTheater" as={NavLink}>Movies in Theaters</Nav.Link>
-						<Nav.Link to="/topIndian" as={NavLink}>Top Rated Indian</Nav.Link>
-						<Nav.Link to="/topRated" as={NavLink}>Top Rated Movies</Nav.Link>
-						<Nav.Link to="/favourites" as={NavLink}>Favourites</Nav.Link>
+						<Nav.Link to="/movies-coming" as={NavLink}>Coming Soon</Nav.Link>
+						<Nav.Link to="/movies-in-theaters" as={NavLink}>Movies in Theaters</Nav.Link>
+						<Nav.Link to="/top-rated-india" as={NavLink}>Top Rated India</Nav.Link>
+						<Nav.Link to="/top-rated-movies" as={NavLink}>Top Rated Movies</Nav.Link>
+						<Nav.Link to="/favourite" as={NavLink}>Favourites</Nav.Link>
 					</Nav>
 					<Form className="d-flex">
 						<Form.Control

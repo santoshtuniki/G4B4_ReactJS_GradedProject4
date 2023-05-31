@@ -66,7 +66,9 @@ const FavouriteMovies = () => {
 			);
 			break;
 		case "LOADED":
-			element = (
+			element = data.length === 0 ? (
+				<div className="text-center my-5" >No data Found</div>
+			) : (
 				<Row xs={1} sm={2} md={3} lg={5}>
 					{
 						data?.map(

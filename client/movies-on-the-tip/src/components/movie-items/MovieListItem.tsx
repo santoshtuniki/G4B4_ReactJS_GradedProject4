@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Card, Button, Toast, ToastContainer } from "react-bootstrap";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import IMovie from "../../model/IMovie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { addToFavourites } from "../../service/FavouritesService";
+import { useLocation } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+import './list-items.css';
 
 type Props = {
 	movie: IMovie
@@ -15,7 +19,9 @@ const MovieListItem = ({ movie }: Props) => {
 	const [toastMessage, setToastMessage] = useState<string>('');
 	const [show, setShow] = useState<boolean>(false);
 
-	const { title, posterurl } = movie;
+	const location = useLocation();
+
+	const { id, title, posterurl } = movie;
 
 	const handleAddToFavorites = async () => {
 		try {
@@ -33,12 +39,16 @@ const MovieListItem = ({ movie }: Props) => {
 	return (
 		<>
 			<Card className="card-width">
-				<Card.Img variant="top" src={posterurl} style={{ height: "300px" }} />
+				<Link to={`${location.pathname}/${id}`}>
+					<Card.Img variant="top" src={posterurl} style={{ height: "300px" }} />
+				</Link>
 				<Card.Body className="text-center">
-					<Card.Title>{title}</Card.Title>
+					<Link to={`${location.pathname}/${id}`} className="no-style">
+						<Card.Title>{title}</Card.Title>
+					</Link>
 					<Button variant="light" onClick={handleAddToFavorites}>
-						Add to favorite
-						<FontAwesomeIcon icon={faHeart} className="ms-2" />
+						<small>Add to favorite</small>
+						<FontAwesomeIcon icon={faHeart} className="ms-2" style={{ color: 'red' }} />
 					</Button>
 				</Card.Body>
 			</Card>
